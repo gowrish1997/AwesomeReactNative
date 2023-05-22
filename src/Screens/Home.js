@@ -1,42 +1,43 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useEffect, useState} from 'react';
+import sanityClient from '../../sanity';
 import {
   Image,
-  SafeAreaView,
+  ScrollView,
   StyleSheet,
   Text,
-  View,
   TextInput,
+  View,
 } from 'react-native';
-import PushNotification from 'react-native-push-notification';
-import {ChevronDownIcon} from 'react-native-heroicons/solid';
 import {
-  UserIcon,
-  MagnifyingGlassIcon,
   AdjustmentsVerticalIcon,
+  MagnifyingGlassIcon,
+  UserIcon,
 } from 'react-native-heroicons/outline';
+import {ChevronDownIcon} from 'react-native-heroicons/solid';
 import Categories from '../../components/Categories';
 import FeaturedRow from '../../components/FeaturedRow';
 
-export function HomeScreen({navigation, route}) {
+export function HomeScreen() {
+  const [featured, setFeatured] = useState([]);
   useEffect(() => {
-    createChannelHandler();
+    sanityClient
+      .fetch(
+        `*[_type=='featured'] {
+      ...,
+        restaurants[]->{
+      ...,
+      dishes[]->{
+      ...,}
+      }
+      }`,
+      )
+      .then(data => {
+        setFeatured(data);
+      });
   }, []);
 
-  const [name, setName] = useState('');
-  const textChangeHandler = async value => {
-    console.log(value);
-    setName(value);
-    await AsyncStorage.setItem('name', name);
-  };
-  const createChannelHandler = () => {
-    PushNotification?.createChannel({
-      channelId: 'test-channel',
-      channelName: 'Test channel',
-    });
-  };
   return (
-    <SafeAreaView className="pb-[5px] ">
+    <ScrollView className="pb-[5px] ">
       <View className="bg-white">
         <View className=" p-2 flex flex-row items-center">
           <View className="flex-row justify-start flex-1 items-center gap-x-[5px] ">
@@ -67,23 +68,18 @@ export function HomeScreen({navigation, route}) {
         </View>
       </View>
 
-      <Categories></Categories>
-      <FeaturedRow
-        id="124"
-        title="Featured"
-        description="Paid placements for out parteners"
-      />
-      <FeaturedRow
-        id="456"
-        title="Tasty discounts"
-        description="Paid placements for out parteners"
-      />
-      <FeaturedRow
-        id="789"
-        title="Offers near you"
-        description="Why not supports your local restuarant tonight"
-      />
-    </SafeAreaView>
+      <Categories />
+      {featured.map(category => {
+        return (
+          <FeaturedRow
+            key={category._id}
+            id={category._id}
+            title={category.name}
+            description={category.short_description}
+          />
+        );
+      })}
+    </ScrollView>
   );
 }
 
