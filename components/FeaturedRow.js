@@ -1,5 +1,5 @@
 import {View, Text, ScrollView} from 'react-native';
-import React,{useState,useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
 import {ArrowRightIcon} from 'react-native-heroicons/solid';
 import RestarantCard from './RestarantCard';
 import {useRef} from 'react';
@@ -19,11 +19,11 @@ const FeaturedRow = ({id, title, description}) => {
       name}
       }
        
-      }`,{id},
+      }`,
+        {id},
       )
       .then(data => {
-        console.log(data[0].restaurants)
-        setRestaurants(data[0].restaurants)
+        setRestaurants(data[0].restaurants);
       });
   }, []);
 
@@ -44,22 +44,23 @@ const FeaturedRow = ({id, title, description}) => {
         showsHorizontalScrollIndicator={false}
         contentContainerStyle={{marginTop: 10}}
         pagingEnabled={false}>
-          {restaurants.map((restaurant)=>{
-            return  <RestarantCard
-            key={restaurant._id}
-            id={restaurant._id}
-            imgURL={restaurant.image}
-            title={restaurant.title}
-            rating={restaurant.rating}
-            genre={restaurant.type.name}
-            address={restaurant.address}
-            short_desc={restaurant.short_description}
-            dishes={[]}
-            long={restaurant.long}
-            lang={restaurant.lat}
-          />
-          })}
-       
+        {restaurants.map(restaurant => {
+          return (
+            <RestarantCard
+              key={restaurant._id}
+              id={restaurant._id}
+              imgURL={restaurant.image}
+              title={restaurant.title}
+              rating={restaurant.rating}
+              genre={restaurant.type.name}
+              address={restaurant.address}
+              short_desc={restaurant.short_description}
+              dishes={[]}
+              long={restaurant.long}
+              lang={restaurant.lat}
+            />
+          );
+        })}
       </ScrollView>
     </View>
   );

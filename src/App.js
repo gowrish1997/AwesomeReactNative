@@ -9,20 +9,16 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {Button, StyleSheet, Text, View} from 'react-native';
 import {HomeScreen} from './Screens/Home';
+import Restaurant from './Screens/Restaurant';
 
 const Stack = createStackNavigator();
 
 function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen
-          name="Homescreen"
-          component={HomeScreen}
-          options={{
-            headerShown: false,
-          }}
-        />
+      <Stack.Navigator screenOptions={{headerShown: false}}>
+        <Stack.Screen name="Homescreen" component={HomeScreen} />
+        <Stack.Screen name="Restaurant" component={Restaurant} />
       </Stack.Navigator>
     </NavigationContainer>
   );

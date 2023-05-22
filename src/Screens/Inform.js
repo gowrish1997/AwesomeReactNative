@@ -1,5 +1,5 @@
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {Button, Text, View,TouchableOpacity} from 'react-native';
+import {Button, Text, View, TouchableOpacity} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome';
 import {useEffect, useState} from 'react';
