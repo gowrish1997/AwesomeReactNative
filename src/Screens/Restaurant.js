@@ -1,4 +1,5 @@
 import {ScrollView, Text, Image, View, TouchableOpacity} from 'react-native';
+import Currency from 'react-currency-formatter';
 import {useRoute} from '@react-navigation/native';
 import {urlFor} from '../../sanity';
 import {
@@ -9,6 +10,7 @@ import {
 import {StarIcon} from 'react-native-heroicons/solid';
 import {MapPinIcon} from 'react-native-heroicons/outline';
 import {useNavigation} from '@react-navigation/native';
+import DishesRow from '../../components/DishesRow';
 
 const Restaurant = () => {
   const navigation = useNavigation();
@@ -70,6 +72,19 @@ const Restaurant = () => {
           <ChevronRightIcon color="#00CCBB" />
         </TouchableOpacity>
       </View>
+      <Text className="py-[10px] pl-4 text-2xl font-bold" >Menu</Text>
+      {dishes.map(data => {
+        return (
+          <DishesRow
+            key={id}
+            id={data.id}
+            name={data.name}
+            description={data.short_description}
+            price={data.price}
+            image={data.image}
+          />
+        );
+      })}
     </ScrollView>
   );
 };

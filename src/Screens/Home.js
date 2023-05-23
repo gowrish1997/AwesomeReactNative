@@ -32,6 +32,7 @@ export function HomeScreen() {
       }`,
       )
       .then(data => {
+   
         setFeatured(data);
       });
   }, []);

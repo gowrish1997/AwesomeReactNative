@@ -10,17 +10,21 @@ import {createStackNavigator} from '@react-navigation/stack';
 import {Button, StyleSheet, Text, View} from 'react-native';
 import {HomeScreen} from './Screens/Home';
 import Restaurant from './Screens/Restaurant';
+import { store } from '../store';
+import { Provider } from 'react-redux'
 
 const Stack = createStackNavigator();
 
 function App() {
   return (
-    <NavigationContainer>
-      <Stack.Navigator screenOptions={{headerShown: false}}>
-        <Stack.Screen name="Homescreen" component={HomeScreen} />
-        <Stack.Screen name="Restaurant" component={Restaurant} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <Provider store={store}>
+      <NavigationContainer>
+        <Stack.Navigator screenOptions={{headerShown: false}}>
+          <Stack.Screen name="Homescreen" component={HomeScreen} />
+          <Stack.Screen name="Restaurant" component={Restaurant} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </Provider>
   );
 }
 
